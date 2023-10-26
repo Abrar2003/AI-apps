@@ -6,7 +6,7 @@ require("dotenv").config();
 const app = express();
 const PORT = process.env.PORT || 8080;
 const openai = new OpenAI({
-  apiKey: "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",
+  apiKey: process.env.OPENAI_API_KEY,
 });
 
 app.use(express.urlencoded({ extended: true }));
@@ -107,6 +107,8 @@ app.post("/code-quality-check", async (req, res) => {
       Please provide a thorough analysis of these aspects and any other relevant factors in your assessment. The more detailed and specific your feedback, the more valuable it will be for improving the code's quality.
       
       Finally, assign a quality score out of 5 and suggest improvements or changes as necessary to enhance the code's quality.
+
+      provide a very brief summary of all the checks and show the score in a new line
 `;
 
   // Use OpenAI GPT-3.5-turbo for code quality assessment
@@ -116,6 +118,9 @@ app.post("/code-quality-check", async (req, res) => {
       { role: "system", content: "You are a code quality checker." },
       { role: "user", content: qualityCheckPrompt },
     ],
+    max_tokens: 500,
+    temperature: 1,
+    n: 1,
   });
 
   // Extract and send the quality summary and score
