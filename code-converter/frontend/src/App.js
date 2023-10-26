@@ -1,23 +1,71 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { useState } from "react";
+import axios from "axios";
+import Codeinput from "./components/Codeinput";
+import Codeoutput from "./components/Codeoutput";
 
 function App() {
+  const [code, setCode] = useState("");
+  const [language, setLanguage] = useState("");
+  const [converted, setConverted] = useState("Please input your code");
+  const handleLanguage = (value) => {
+    setLanguage(value);
+  };
+  const handleChange = (value) => {
+    setCode(value);
+  };
+  const handleConvert = async () => {
+    //Convert Code post request
+    setConverted("");
+    const res = await axios.post(
+      "https://adorable-garters-eel.cyclic.app/code-converter",
+      {
+        code,
+        language,
+      }
+    );
+    console.log(res.data.convertedCode);
+    setConverted(res.data.convertedCode);
+  };
+  const handleDebug = async () => {
+    console.log(code);
+    //Convert Code post request
+    setConverted("");
+    const res = await axios.post(
+      "https://adorable-garters-eel.cyclic.app/code-debugger",
+      {
+        code,
+      }
+    );
+    console.log(res.data.convertedCode);
+    setConverted(res.data.debuggingSummary);
+  };
+  const handleQuality = async () => {
+    console.log(code);
+    //Convert Code post request
+    setConverted("");
+    const res = await axios.post(
+      "https://adorable-garters-eel.cyclic.app/code-quality-check",
+      {
+        code,
+      }
+    );
+    console.log(res.data.convertedCode);
+    setConverted(res.data.qualitySummary);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="main">
+      <h1>Code Converter / Debugger / Quality Checker</h1>
+      <div className="App">
+        <Codeinput
+          handleChange={handleChange}
+          handleConvert={handleConvert}
+          handleDebug={handleDebug}
+          handleQuality={handleQuality}
+          handleLanguage={handleLanguage}
+        />
+        <Codeoutput code={converted} />
+      </div>
     </div>
   );
 }
