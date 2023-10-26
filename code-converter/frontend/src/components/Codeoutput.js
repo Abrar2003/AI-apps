@@ -2,7 +2,7 @@ import "../App.css";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 
-const Codeoutput = ({ code }) => {
+const Codeoutput = ({ code, language }) => {
   return (
     <div className="container">
       <h1>Code Output</h1>

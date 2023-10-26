@@ -64,7 +64,7 @@ function App() {
           handleQuality={handleQuality}
           handleLanguage={handleLanguage}
         />
-        <Codeoutput code={converted} />
+        <Codeoutput code={converted} language={language? language : "javascript"} />
       </div>
     </div>
   );
