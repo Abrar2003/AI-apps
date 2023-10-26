@@ -6,7 +6,7 @@ require("dotenv").config();
 const app = express();
 const PORT = process.env.PORT || 8080;
 const openai = new OpenAI({
-  apiKey: process.env.OPNEAI_API_KEY
+  apiKey: "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",
 });
 
 app.use(express.urlencoded({ extended: true }));
@@ -82,8 +82,31 @@ app.post("/code-quality-check", async (req, res) => {
       ${code}
   
       ---
+      Key aspects to consider during your assessment:
 
-Finally, assign a quality score out of 5 and suggest improvements or changes as necessary to enhance the code's quality.
+      1. **Code Structure**: Evaluate the overall organization and structure of the code. Is it logically organized? Are there clear and meaningful variable/function names? Is there an appropriate use of comments and documentation?
+      
+      2. **Readability**: Assess the code's readability. Is it easy to understand, even for someone not familiar with the project? Is there consistent indentation and formatting?
+      
+      3. **Maintainability**: Consider whether the code is easy to maintain and modify. Are there any code smells or anti-patterns present? Is the code DRY (Don't Repeat Yourself) and modular?
+      
+      4. **Performance**: Analyze the code's performance. Does it make efficient use of resources? Are there any potential bottlenecks or areas for optimization?
+      
+      5. **Error Handling**: Evaluate the code's robustness in error handling. Does it gracefully handle exceptions and edge cases?
+      
+      6. **Security**: Assess the code for potential security vulnerabilities. Are there any common security issues, such as SQL injection or XSS vulnerabilities?
+      
+      7. **Scalability**: Consider the code's scalability. Is it designed to accommodate growth in data or users?
+      
+      8. **Testing**: Is the code adequately tested? Are there unit tests, integration tests, or other test suites in place to ensure functionality and reliability?
+      
+      9. **Documentation**: Look for comprehensive documentation. Are there clear explanations of functions, classes, and APIs? Is there documentation on how to use the code?
+      
+      10. **Best Practices**: Check if the code adheres to industry best practices and coding standards for the specific programming language.
+      
+      Please provide a thorough analysis of these aspects and any other relevant factors in your assessment. The more detailed and specific your feedback, the more valuable it will be for improving the code's quality.
+      
+      Finally, assign a quality score out of 5 and suggest improvements or changes as necessary to enhance the code's quality.
 `;
 
   // Use OpenAI GPT-3.5-turbo for code quality assessment
@@ -97,7 +120,7 @@ Finally, assign a quality score out of 5 and suggest improvements or changes as 
 
   // Extract and send the quality summary and score
   const qualitySummary = response.choices[0].message.content;
-  
+
   res.json({ qualitySummary });
 });
 
